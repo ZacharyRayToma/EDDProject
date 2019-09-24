@@ -217,6 +217,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca1b12b0012c77a41be5632bc307551b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  axes: 1
+  sensHorizontal: 10
+  sensVertical: 10
+  _rotationX: 0
 --- !u!114 &272530983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,6 +233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca1b12b0012c77a41be5632bc307551b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< HEAD:New Unity Project/Assets/Testscene.unity
 --- !u!1001 &329818772
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -313,6 +318,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dae205af6f6714041a3ceb4255fc1287, type: 3}
+=======
+  axes: 2
+  sensHorizontal: 10
+  sensVertical: 10
+  _rotationX: 0
+>>>>>>> 62b77f6abe10da81fa2c7c8ecb582573ce34a84d:New Unity Project/Assets/EDDproject.unity
 --- !u!1 &614246597
 GameObject:
   m_ObjectHideFlags: 0
