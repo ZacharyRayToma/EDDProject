@@ -217,6 +217,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca1b12b0012c77a41be5632bc307551b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  axes: 1
+  sensHorizontal: 10
+  sensVertical: 10
+  _rotationX: 0
 --- !u!114 &272530983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,6 +233,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca1b12b0012c77a41be5632bc307551b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  axes: 2
+  sensHorizontal: 10
+  sensVertical: 10
+  _rotationX: 0
 --- !u!1 &614246597
 GameObject:
   m_ObjectHideFlags: 0
