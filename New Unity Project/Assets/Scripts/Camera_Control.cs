@@ -15,7 +15,8 @@ public class Camera_Control : MonoBehaviour
     public float sensVertical = 10.0f;
 
     public float _rotationX = 0;
-
+    public float minimumVert = -65.0f;
+    public float maximumVert = 65.0f; 
     // Update is called once per frame
     void Update()
     {
@@ -26,7 +27,7 @@ public class Camera_Control : MonoBehaviour
         else if (axes == RotationAxis.MouseY)
         {
             _rotationX -= Input.GetAxis("Mouse Y") * sensVertical;
-
+            _rotationX = Mathf.Clamp(_rotationX, minimumVert, maximumVert); //clamps the vertical angles so that you cant infinitely look in a direction
             float rotationY = transform.localEulerAngles.y;
 
 
