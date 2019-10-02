@@ -436,6 +436,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FloorDefaultPrison
       objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: dc69419fafbb2e64caad50682d31b0d1,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: dc69419fafbb2e64caad50682d31b0d1,
         type: 3}
       propertyPath: m_LocalPosition.x
