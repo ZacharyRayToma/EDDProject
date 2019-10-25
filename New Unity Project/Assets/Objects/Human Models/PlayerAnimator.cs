@@ -26,6 +26,14 @@ public class PlayerAnimator : MonoBehaviour
         {
             m_Animator.SetInteger("MotionState", 3);
         }
+        else if (Input.GetKey(KeyCode.D))
+        {
+            m_Animator.SetInteger("MotionState", 4);
+        }
+        else if (Input.GetKey(KeyCode.S))
+        {
+            m_Animator.SetInteger("MotionState", 5);
+        }
         else
         {
             m_Animator.SetInteger("MotionState", 1);
