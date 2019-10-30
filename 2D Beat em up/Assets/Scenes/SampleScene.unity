@@ -160,8 +160,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AssetsPPU: 8
-  m_RefResolutionX: 384
-  m_RefResolutionY: 216
+  m_RefResolutionX: 768
+  m_RefResolutionY: 432
   m_UpscaleRT: 1
   m_PixelSnapping: 0
   m_CropFrameX: 1
