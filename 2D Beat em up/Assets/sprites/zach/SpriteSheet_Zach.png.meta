@@ -47,6 +47,21 @@ TextureImporter:
   - first:
       213: 4033895894956538836
     second: SpriteSheet_Zach_9
+  - first:
+      213: -7496798363098834292
+    second: SpriteSheet_Zach_10
+  - first:
+      213: -1221514320420599314
+    second: SpriteSheet_Zach_11
+  - first:
+      213: -2914099624457378062
+    second: SpriteSheet_Zach_12
+  - first:
+      213: 7192602927719186365
+    second: SpriteSheet_Zach_13
+  - first:
+      213: 8154992086188903063
+    second: SpriteSheet_Zach_14
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -146,10 +161,10 @@ TextureImporter:
       name: SpriteSheet_Zach_0
       rect:
         serializedVersion: 2
-        x: 80
-        y: 363
-        width: 95
-        height: 297
+        x: 79
+        y: 843
+        width: 98
+        height: 299
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -157,7 +172,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 13180a5e3d6b1824c9ed48f86ec2c7fc
+      spriteID: ad5efb9335cad6e4f94237c347093ee5
       internalID: -510235802244541740
       vertices: []
       indices: 
@@ -167,10 +182,10 @@ TextureImporter:
       name: SpriteSheet_Zach_1
       rect:
         serializedVersion: 2
-        x: 338
-        y: 360
-        width: 91
-        height: 306
+        x: 336
+        y: 840
+        width: 94
+        height: 309
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -178,7 +193,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 47c4f1a9921bdc249aca69fe22a2308f
+      spriteID: ffc95a4473d7cc7449acc3da61d1edc1
       internalID: -1792598096256232675
       vertices: []
       indices: 
@@ -188,10 +203,10 @@ TextureImporter:
       name: SpriteSheet_Zach_2
       rect:
         serializedVersion: 2
-        x: 588
-        y: 355
-        width: 104
-        height: 313
+        x: 587
+        y: 835
+        width: 106
+        height: 315
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -199,7 +214,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 555316833f13a00409d46ea38e00609f
+      spriteID: ebaefb713c3db6b4b99a89d597ce60cc
       internalID: -249530580009571539
       vertices: []
       indices: 
@@ -209,10 +224,10 @@ TextureImporter:
       name: SpriteSheet_Zach_3
       rect:
         serializedVersion: 2
-        x: 850
-        y: 360
-        width: 91
-        height: 306
+        x: 849
+        y: 840
+        width: 93
+        height: 309
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -220,7 +235,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fce161c64a9a15240b83837f665d9e5e
+      spriteID: 20109927ea1b73a4eb0ed71954f0c927
       internalID: -7678255817950071613
       vertices: []
       indices: 
@@ -230,10 +245,10 @@ TextureImporter:
       name: SpriteSheet_Zach_4
       rect:
         serializedVersion: 2
-        x: 1100
-        y: 370
-        width: 103
-        height: 295
+        x: 1099
+        y: 850
+        width: 105
+        height: 297
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -241,7 +256,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0f699091e8cd89948a81da41a1803f39
+      spriteID: 22d0376df8603f340ac7dcbcb5c6a089
       internalID: 774700104437175931
       vertices: []
       indices: 
@@ -251,9 +266,9 @@ TextureImporter:
       name: SpriteSheet_Zach_5
       rect:
         serializedVersion: 2
-        x: 75
-        y: 30
-        width: 86
+        x: 74
+        y: 511
+        width: 88
         height: 319
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -262,7 +277,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: aeb67a4ee1aeddb40b7291326d4b4623
+      spriteID: 20005d022cb638f48934e5dbe04c4aef
       internalID: -3305623760449879867
       vertices: []
       indices: 
@@ -272,10 +287,10 @@ TextureImporter:
       name: SpriteSheet_Zach_6
       rect:
         serializedVersion: 2
-        x: 302
-        y: 23
-        width: 101
-        height: 325
+        x: 301
+        y: 504
+        width: 103
+        height: 326
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -283,7 +298,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a3496ec2c639f5a4ea52f2ae5308109b
+      spriteID: d00b6446422992941ab71fbe977d947b
       internalID: -5713758431567124538
       vertices: []
       indices: 
@@ -293,10 +308,10 @@ TextureImporter:
       name: SpriteSheet_Zach_7
       rect:
         serializedVersion: 2
-        x: 552
-        y: 25
-        width: 121
-        height: 321
+        x: 551
+        y: 505
+        width: 122
+        height: 323
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -304,7 +319,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bb624be55e8b6854e9716acdca023c82
+      spriteID: 93d2dcaaf9c4d7749922b704870e0f9d
       internalID: -6658798617263375932
       vertices: []
       indices: 
@@ -315,9 +330,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 806
-        y: 16
-        width: 90
-        height: 329
+        y: 497
+        width: 91
+        height: 330
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -325,7 +340,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c94fe5474bddad948add4975bfb93370
+      spriteID: 9b31da444d812d6499a0d55777613e11
       internalID: -6966379076779262511
       vertices: []
       indices: 
@@ -335,10 +350,10 @@ TextureImporter:
       name: SpriteSheet_Zach_9
       rect:
         serializedVersion: 2
-        x: 1054
-        y: 16
-        width: 109
-        height: 331
+        x: 1053
+        y: 496
+        width: 111
+        height: 333
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -346,8 +361,113 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 557d31ab193846844a713e185b48b212
+      spriteID: 5dbf516f2c0da494882c68bfc233d26c
       internalID: 4033895894956538836
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteSheet_Zach_10
+      rect:
+        serializedVersion: 2
+        x: 66
+        y: 144
+        width: 93
+        height: 336
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d2c951bdfbb4754ca53c1707c93b33c
+      internalID: -7496798363098834292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteSheet_Zach_11
+      rect:
+        serializedVersion: 2
+        x: 299
+        y: 148
+        width: 93
+        height: 336
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8dd71c2ed5bd0294bbc0df57f3d90ab8
+      internalID: -1221514320420599314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteSheet_Zach_12
+      rect:
+        serializedVersion: 2
+        x: 553
+        y: 143
+        width: 93
+        height: 336
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0fcb4f8858fabb1428576e6446f99301
+      internalID: -2914099624457378062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteSheet_Zach_13
+      rect:
+        serializedVersion: 2
+        x: 791
+        y: 138
+        width: 93
+        height: 336
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9df64eca747634945aaea2c63c278c09
+      internalID: 7192602927719186365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SpriteSheet_Zach_14
+      rect:
+        serializedVersion: 2
+        x: 1055
+        y: 140
+        width: 93
+        height: 337
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b0fd8d37c722a5449e1895e79f9799b
+      internalID: 8154992086188903063
       vertices: []
       indices: 
       edges: []
