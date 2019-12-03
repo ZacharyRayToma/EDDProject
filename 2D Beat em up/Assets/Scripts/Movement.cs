@@ -26,7 +26,7 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.D) && !islocked)
         {
             if (Input.GetKey(KeyCode.LeftShift))
             {
@@ -51,11 +51,11 @@ public class Movement : MonoBehaviour
         else if (Input.GetKey(KeyCode.W) || unlockkey == 5)
         {
             Movementlock(0.5, 5);
-            if (Time.time >= unlocktime - .25)
+            if (Time.time >= unlocktime - .25 && islocked)
             {
                 ZachMovement(Vector3.down, speed * jumpmultiplyer, 5);
             }
-            else if(Time.time <= unlocktime - .25)
+            else if(Time.time <= unlocktime - .25 && islocked)
             {
                 ZachMovement(Vector3.up, speed * jumpmultiplyer, 5);
             }
