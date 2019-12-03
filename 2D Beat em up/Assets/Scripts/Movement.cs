@@ -9,52 +9,58 @@ public class Movement : MonoBehaviour
     public Animator animator;
     private string moveLock;
     public int dashmultiplyer;
+    private bool islocked;
+    private double unlocktime;
+    private int unlockkey;
+    public int jumpmultiplyer;
     // Use this for initialization
     void Start()
     {
         position = gameObject.transform.position;
         animator = GetComponent<Animator>();
         Application.targetFrameRate = 60;
+        islocked = false;
 
     }
 
     // Update is called once per frame
     void Update()
     {
-
         if (Input.GetKey(KeyCode.D))
         {
             if (Input.GetKey(KeyCode.LeftShift))
             {
-                transform.Translate(Vector2.right * speed * dashmultiplyer * Time.deltaTime, transform);
-                animator.SetInteger("AnimationState", 3);
-
+                ZachMovement(Vector2.right, speed * dashmultiplyer, 3);
             }
             else
             {
                 ZachMovement(Vector2.right, speed, 1);
             }
         }
-        else if (Input.GetKey(KeyCode.A))
+        else if (Input.GetKey(KeyCode.A) && !islocked)
         {
             if (Input.GetKey(KeyCode.LeftShift))
             {
-                transform.Translate(Vector2.left * speed * dashmultiplyer * Time.deltaTime, transform);
-                animator.SetInteger("AnimationState", 4);
+                ZachMovement(Vector2.left, speed * dashmultiplyer, 4);
             }
             else
             {
-                transform.Translate(Vector2.left * speed * Time.deltaTime, transform);
-                animator.SetInteger("AnimationState", 2);
+                ZachMovement(Vector2.left, speed, 2);
             }
         }
-        else if (Input.GetKey(KeyCode.W))
+        else if (Input.GetKey(KeyCode.W) || unlockkey == 5)
         {
-
-            transform.Translate(Vector2.left * speed * dashmultiplyer * Time.deltaTime, transform);
-            animator.SetInteger("AnimationState", 4);
+            Movementlock(0.5, 5);
+            if (Time.time >= unlocktime - .25)
+            {
+                ZachMovement(Vector3.down, speed * jumpmultiplyer, 5);
+            }
+            else if(Time.time <= unlocktime - .25)
+            {
+                ZachMovement(Vector3.up, speed * jumpmultiplyer, 5);
+            }
         }
-        else
+        else if (!islocked)
         {
             animator.SetInteger("AnimationState", 0);
         }
@@ -62,7 +68,26 @@ public class Movement : MonoBehaviour
     }
      void ZachMovement(Vector3 zachdirection, float zachspeed, int animationstate)
     {
-        transform.Translate(zachdirection * zachspeed * Time.deltaTime, transform);
-        animator.SetInteger("AnimationState", animationstate);
+        if (!islocked || animationstate == unlockkey)
+        {
+            transform.Translate(zachdirection * zachspeed * Time.deltaTime, transform);
+            animator.SetInteger("AnimationState", animationstate);
+        }
     }
+
+    void Movementlock(double delaytime, int currentkey)
+    {
+        if(!islocked)
+        {
+            unlockkey = currentkey;
+            islocked = true;
+            unlocktime = Time.time + delaytime;
+        }
+        else if(unlocktime <= Time.time)
+        {
+            islocked = false;
+            unlockkey = 9999;
+        }
+    }
+
 }

@@ -237,6 +237,7 @@ MonoBehaviour:
   speed: 20
   animator: {fileID: 339852893}
   dashmultiplyer: 3
+  jumpmultiplyer: 4
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
