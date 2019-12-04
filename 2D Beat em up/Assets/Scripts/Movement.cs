@@ -13,7 +13,6 @@ public class Movement : MonoBehaviour
     private double unlocktime;
     private int unlockkey;
     public int jumpmultiplyer;
-    private int timeint;
     // Use this for initialization
     void Start()
     {
@@ -28,11 +27,11 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        timeint = (int)Time.time;
-        if (Input.GetKey(KeyCode.D) || unlockkey == 3)
+        bool keyPress = false;
+        if (getKeyPressed(KeyCode.D) || unlockkey == 3)
         {
-            
-            if (Input.GetKeyDown(KeyCode.LeftShift) || unlockkey == 3)
+            keyPress = true;
+            if (getKeyDown(KeyCode.LeftShift) || unlockkey == 3)
             {
                 Movementlock(0.25, 3);
                 ZachMovement(Vector2.right, ((float)unlocktime - Time.time) * dashmultiplyer, 3);
@@ -42,9 +41,10 @@ public class Movement : MonoBehaviour
                 ZachMovement(Vector2.right, speed, 1);
             }
         }
-        else if (Input.GetKey(KeyCode.A) || unlockkey == 4)
+        if (getKeyPressed(KeyCode.A) || unlockkey == 4)
         {
-            if (Input.GetKeyDown(KeyCode.LeftShift) || unlockkey == 4)
+            keyPress = true;
+            if (getKeyDown(KeyCode.LeftShift) || unlockkey == 4)
             {
                 Movementlock(0.25, 4);
                 ZachMovement(Vector2.left, ((float)unlocktime - Time.time) * dashmultiplyer, 4);
@@ -54,8 +54,9 @@ public class Movement : MonoBehaviour
                 ZachMovement(Vector2.left, speed, 2);
             }
         }
-        else if (Input.GetKey(KeyCode.W) || unlockkey == 5)
+        if (getKeyDown(KeyCode.W) || unlockkey == 5)
         {
+            keyPress = true;
             Movementlock(0.5, 5);
             if (Time.time >= unlocktime - .25 && islocked)
             {
@@ -66,7 +67,8 @@ public class Movement : MonoBehaviour
                 ZachMovement(Vector3.up, speed * jumpmultiplyer, 5);
             }
         }
-        else if (!islocked)
+        //!islocked ||
+        if ( !keyPress)
         {
             animator.SetInteger("AnimationState", 0);
         }
@@ -94,6 +96,23 @@ public class Movement : MonoBehaviour
             islocked = false;
             unlockkey = 9999;
         }
+        
+    }
+    bool getKeyPressed(KeyCode yes)
+    {
+        if (!islocked)
+        {
+            return Input.GetKey(yes);
+        }
+        else return false;
+    }
+    bool getKeyDown(KeyCode yes)
+    {
+        if (!islocked)
+        {
+            return Input.GetKeyDown(yes);
+        }
+        else return false;
     }
 
 }
