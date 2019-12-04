@@ -13,6 +13,7 @@ public class Movement : MonoBehaviour
     private double unlocktime;
     private int unlockkey;
     public int jumpmultiplyer;
+    private int timeint;
     // Use this for initialization
     void Start()
     {
@@ -20,37 +21,33 @@ public class Movement : MonoBehaviour
         animator = GetComponent<Animator>();
         Application.targetFrameRate = 60;
         islocked = false;
+        
 
     }
 
     // Update is called once per frame
     void Update()
     {
+        timeint = (int)Time.time;
         if (Input.GetKey(KeyCode.D) || unlockkey == 3)
         {
             
-            if (Input.GetKey(KeyCode.LeftShift) || unlockkey == 3)
+            if (Input.GetKeyDown(KeyCode.LeftShift) || unlockkey == 3)
             {
-                Movementlock(0.5, 3);
-                if (Time.time >= unlocktime - .25 && islocked)
-                {
-                    ZachMovement(Vector2.right, speed * dashmultiplyer, 0);
-                }
-                else if (islocked)
-                {
-                    ZachMovement(Vector2.right, speed * dashmultiplyer, 3);
-                }
+                Movementlock(0.25, 3);
+                ZachMovement(Vector2.right, ((float)unlocktime - Time.time) * dashmultiplyer, 3);
             }
             else
             {
                 ZachMovement(Vector2.right, speed, 1);
             }
         }
-        else if (Input.GetKey(KeyCode.A) && !islocked)
+        else if (Input.GetKey(KeyCode.A) || unlockkey == 4)
         {
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKeyDown(KeyCode.LeftShift) || unlockkey == 4)
             {
-                ZachMovement(Vector2.left, speed * dashmultiplyer, 4);
+                Movementlock(0.25, 4);
+                ZachMovement(Vector2.left, ((float)unlocktime - Time.time) * dashmultiplyer, 4);
             }
             else
             {

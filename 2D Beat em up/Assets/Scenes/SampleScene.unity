@@ -237,7 +237,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 20
   animator: {fileID: 339852893}
-  dashmultiplyer: 3
+  dashmultiplyer: 800
   jumpmultiplyer: 4
 --- !u!61 &339852897
 BoxCollider2D:
