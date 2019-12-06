@@ -13,6 +13,7 @@ public class Movement : MonoBehaviour
     private double unlocktime;
     private int unlockkey;
     public int jumpmultiplyer;
+    public bool keyPress;
     // Use this for initialization
     void Start()
     {
@@ -27,10 +28,9 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        bool keyPress = false;
+        keyPress = false;
         if (getKeyPressed(KeyCode.D) || unlockkey == 3)
         {
-            keyPress = true;
             if (getKeyDown(KeyCode.LeftShift) || unlockkey == 3)
             {
                 Movementlock(0.25, 3);
@@ -43,7 +43,6 @@ public class Movement : MonoBehaviour
         }
         if (getKeyPressed(KeyCode.A) || unlockkey == 4)
         {
-            keyPress = true;
             if (getKeyDown(KeyCode.LeftShift) || unlockkey == 4)
             {
                 Movementlock(0.25, 4);
@@ -56,7 +55,6 @@ public class Movement : MonoBehaviour
         }
         if (getKeyDown(KeyCode.W) || unlockkey == 5)
         {
-            keyPress = true;
             Movementlock(0.5, 5);
             if (Time.time >= unlocktime - .25 && islocked)
             {
@@ -67,8 +65,9 @@ public class Movement : MonoBehaviour
                 ZachMovement(Vector3.up, speed * jumpmultiplyer, 5);
             }
         }
-        //!islocked ||
-        if ( !keyPress)
+
+        //will play if nothing else is being done
+        if (!keyPress)
         {
             animator.SetInteger("AnimationState", 0);
         }
@@ -78,6 +77,7 @@ public class Movement : MonoBehaviour
     {
         if (!islocked || animationstate == unlockkey)
         {
+            keyPress = true;
             transform.Translate(zachdirection * zachspeed * Time.deltaTime, transform);
             animator.SetInteger("AnimationState", animationstate);
         }
@@ -111,6 +111,14 @@ public class Movement : MonoBehaviour
         if (!islocked)
         {
             return Input.GetKeyDown(yes);
+        }
+        else return false;
+    }
+    bool getKeyUp(KeyCode yes)
+    {
+        if (!islocked)
+        {
+            return Input.GetKeyUp(yes);
         }
         else return false;
     }
