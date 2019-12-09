@@ -65,9 +65,26 @@ public class Movement : MonoBehaviour
                 ZachMovement(Vector3.up, speed * jumpmultiplyer, 5);
             }
         }
+        if (getKeyPressed(KeyCode.S) || unlockkey == 7 || unlockkey == 6)
+        {
+            if (keyPress)
+            {
+                Movementlock(0.1, 7);
+                ZachMovement(Vector3.down, 0, 7);
+            }
+            if (!keyPress)
+            {
+                Movementlock(0.1, 6);
+                ZachMovement(Vector3.down , 0 , 6);
+            }
+            else
+            {
+                ZachMovement(Vector3.down, 0, 8);
+            }
+        }
 
         //will play if nothing else is being done
-        if (!keyPress)
+        if (!keyPress && !islocked)
         {
             animator.SetInteger("AnimationState", 0);
         }
@@ -122,5 +139,4 @@ public class Movement : MonoBehaviour
         }
         else return false;
     }
-
 }
