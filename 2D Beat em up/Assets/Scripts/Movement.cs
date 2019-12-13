@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Movement : MonoBehaviour
 {
     public float speed;
@@ -14,8 +15,10 @@ public class Movement : MonoBehaviour
     private double unlocktime;
     private int unlockkey;
     public int jumpmultiplyer;
-    public bool keyPress;
-    public bool playerone;
+    private bool keyPress;
+    public bool facingright;
+    public float dashdelay;
+
     // Use this for initialization
     void Start()
     {
@@ -24,6 +27,7 @@ public class Movement : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         Application.targetFrameRate = 60;
         islocked = false;
+        keyPress = false;
         
 
     }
@@ -35,14 +39,14 @@ public class Movement : MonoBehaviour
     }
     void ZachMovement(Vector3 zachdirection, float zachspeed, int animationstate)
     {
-        if (playerone && !islocked || playerone && animationstate == unlockkey)
+        if (facingright && !islocked || facingright && animationstate == unlockkey)
         {
-            keyPress = true;
+            //keyPress = true;
             transform.Translate(zachdirection * zachspeed * Time.deltaTime, transform);
             animator.SetInteger("AnimationState", animationstate);
             spriteRenderer.flipX = false;
         }
-        if (!playerone && !islocked || !playerone && animationstate == unlockkey)
+        if (!facingright && !islocked || !facingright && animationstate == unlockkey)
         {
             keyPress = true;
             transform.Translate(zachdirection * zachspeed * Time.deltaTime, transform);
@@ -66,21 +70,13 @@ public class Movement : MonoBehaviour
         }
         
     }
-    bool getKeyPressed(KeyCode yes)
+    float getKeyPressed(string yes)
     {
-        if (!islocked)
+        if (!islocked || Input.GetAxis(yes) != 0)
         {
-            return Input.GetKey(yes);
+            return Input.GetAxis(yes);
         }
-        else return false;
-    }
-    bool getKeyDown(KeyCode yes)
-    {
-        if (!islocked)
-        {
-            return Input.GetKeyDown(yes);
-        }
-        else return false;
+        else return 0;
     }
     bool getKeyUp(KeyCode yes)
     {
@@ -90,12 +86,16 @@ public class Movement : MonoBehaviour
         }
         else return false;
     }
+    void delaydash(string controller)
+    {
+        dashdelay = Input.GetAxis(controller);
+    }
     void PlayerMovement()
     {
         keyPress = false;
-        if (getKeyPressed(KeyCode.D) || unlockkey == 3)
+        if (getKeyPressed("P1X") > 0|| unlockkey == 3)
         {
-            if (getKeyDown(KeyCode.LeftShift) || unlockkey == 3)
+            if (getKeyPressed("DashP1") > 0 || unlockkey == 3)
             {
                 Movementlock(0.25, 3);
                 ZachMovement(Vector2.right, ((float)unlocktime - Time.time) * dashmultiplyer, 3);
@@ -105,9 +105,9 @@ public class Movement : MonoBehaviour
                 ZachMovement(Vector2.right, speed, 1);
             }
         }
-        if (getKeyPressed(KeyCode.A) || unlockkey == 4)
+        if (getKeyPressed("P1X") < 0 || unlockkey == 4)
         {
-            if (getKeyDown(KeyCode.LeftShift) || unlockkey == 4)
+            if (getKeyPressed("DashP1") > 0 || unlockkey == 4)
             {
                 Movementlock(0.25, 4);
                 ZachMovement(Vector2.left, ((float)unlocktime - Time.time) * dashmultiplyer, 4);
@@ -117,7 +117,7 @@ public class Movement : MonoBehaviour
                 ZachMovement(Vector2.left, speed, 2);
             }
         }
-        if (getKeyDown(KeyCode.W) || unlockkey == 5)
+        if (getKeyPressed("JumpP1") > 0 || unlockkey == 5)
         {
             Movementlock(0.5, 5);
             if (Time.time >= unlocktime - .25 && islocked)
@@ -129,29 +129,33 @@ public class Movement : MonoBehaviour
                 ZachMovement(Vector3.up, speed * jumpmultiplyer, 5);
             }
         }
-        if (getKeyPressed(KeyCode.S) || unlockkey == 7 || unlockkey == 6)
+        
+        /*if (getKeyPressed("CrouchP1") > 0 || unlockkey == 7 || unlockkey == 6)
         {
-            if (keyPress)
-            {
-                Movementlock(0.1, 7);
-                ZachMovement(Vector3.down, 0, 7);
-            }
-            if (!keyPress)
-            {
-                Movementlock(0.1, 6);
-                ZachMovement(Vector3.down, 0, 6);
-            }
-            else
-            {
-                ZachMovement(Vector3.down, 0, 8);
-            }
-        }
-
+           if (keyPress)
+           {
+               Movementlock(0.1, 7);
+               ZachMovement(Vector3.down, 0, 7);
+           }
+           if (!keyPress)
+           {
+               Movementlock(0.1, 6);
+               ZachMovement(Vector3.down, 0, 6);
+           }
+           else
+           {
+               ZachMovement(Vector3.down, 0, 8);
+           }
+         }  
+         */
         //will play if nothing else is being done
         if (!keyPress && !islocked)
         {
             ZachMovement(Vector3.up, 0, 0);
+            keyPress = false;
+            
         }
+
     }
 
 
