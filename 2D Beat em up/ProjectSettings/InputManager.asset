@@ -39,7 +39,7 @@ InputManager:
     joyNum: 0
   - serializedVersion: 3
     m_Name: CrouchP1
-    descriptiveName: 
+    descriptiveName: Crouch P1
     descriptiveNegativeName: 
     negativeButton: 
     positiveButton: s

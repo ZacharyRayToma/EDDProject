@@ -72,7 +72,7 @@ public class Movement : MonoBehaviour
     }
     float getKeyPressed(string yes)
     {
-        if (!islocked || Input.GetAxis(yes) != 0)
+        if (!islocked)
         {
             return Input.GetAxis(yes);
         }
@@ -130,19 +130,9 @@ public class Movement : MonoBehaviour
             }
         }
         
-        if (getKeyPressed("CrouchP1") > 0 || unlockkey == 7 || unlockkey == 6)
+        if (getKeyPressed("CrouchP1") > 0 || unlockkey == 6 || unlockkey == 7)
         {
-            if (!islocked)
-            {
-                Movementlock(0.1, 6);
-                ZachMovement(Vector3.down, 1, 6);
-            }
-            if(Time.time >= unlocktime - .05 && keyPress)
-            {
-                Movementlock(0.1, 7);
-                ZachMovement(Vector3.down, 0, 7);
-            }
-            
+            crouch();
         }  
          
         //will play if nothing else is being done
@@ -151,6 +141,22 @@ public class Movement : MonoBehaviour
             ZachMovement(Vector3.up, 0, 0);
             keyPress = false;
             
+        }
+
+        void crouch()
+        {
+            if (!islocked || Time.time <= unlocktime -.25 && islocked) //set initial animation to play for a certain time, find the speed you need for a proper crouch
+            {
+                Movementlock(.5, 6);
+                ZachMovement(Vector3.down, 0, 6);
+            }
+            if(islocked && Time.time >= unlocktime - .25) //toggle something after a certain period to play the static crouch animation while key is held
+            {
+                Movementlock(.1, 7);
+                ZachMovement(Vector3.down, 0, 7);
+            }
+            
+            //play the final animation after period has expired
         }
 
     }
