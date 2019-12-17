@@ -41,7 +41,7 @@ public class Movement : MonoBehaviour
     {
         if (facingright && !islocked || facingright && animationstate == unlockkey)
         {
-            //keyPress = true;
+            keyPress = true;
             transform.Translate(zachdirection * zachspeed * Time.deltaTime, transform);
             animator.SetInteger("AnimationState", animationstate);
             spriteRenderer.flipX = false;
@@ -130,24 +130,21 @@ public class Movement : MonoBehaviour
             }
         }
         
-        /*if (getKeyPressed("CrouchP1") > 0 || unlockkey == 7 || unlockkey == 6)
+        if (getKeyPressed("CrouchP1") > 0 || unlockkey == 7 || unlockkey == 6)
         {
-           if (keyPress)
-           {
-               Movementlock(0.1, 7);
-               ZachMovement(Vector3.down, 0, 7);
-           }
-           if (!keyPress)
-           {
-               Movementlock(0.1, 6);
-               ZachMovement(Vector3.down, 0, 6);
-           }
-           else
-           {
-               ZachMovement(Vector3.down, 0, 8);
-           }
-         }  
-         */
+            if (!islocked)
+            {
+                Movementlock(0.1, 6);
+                ZachMovement(Vector3.down, 1, 6);
+            }
+            if(Time.time >= unlocktime - .05 && keyPress)
+            {
+                Movementlock(0.1, 7);
+                ZachMovement(Vector3.down, 0, 7);
+            }
+            
+        }  
+         
         //will play if nothing else is being done
         if (!keyPress && !islocked)
         {
