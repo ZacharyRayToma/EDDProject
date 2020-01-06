@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class Movement : MonoBehaviour
 {
     public float speed;
@@ -14,8 +15,16 @@ public class Movement : MonoBehaviour
     private double unlocktime;
     private int unlockkey;
     public int jumpmultiplyer;
-    public bool keyPress;
-    public bool playerone;
+    private bool keyPress;
+    public bool facingright;
+    public float dashdelay;
+    public int player;
+    private List<string> player1controls = new List<string>();
+    private List<string> player2controls = new List<string>();
+    private List<int> animationlistright = new List<int>();
+    private List<int> animationlistleft = new List<int>();
+
+
     // Use this for initialization
     void Start()
     {
@@ -24,25 +33,57 @@ public class Movement : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         Application.targetFrameRate = 60;
         islocked = false;
-        
+        keyPress = false;
+        //controls for player 1 (names corespond to the names set in unity), the commented number is its number in the list counting from 0
+        player1controls.Add("P1X"); //0
+        player1controls.Add("DashP1");  //1
+        player1controls.Add("JumpP1");  //2
+        player1controls.Add("CrouchP1");    //3
+
+        //controls for player 2 (names corespond to the names set in unity), the commented number is its number in the list counting from 0
+        player2controls.Add("P2X"); //0
+        player2controls.Add("DashP2");  //1
+        player2controls.Add("JumpP2");  //2
+        player2controls.Add("CrouchP2");    //3
+
+        //list used for directional animations for facing right, added because incorrect animations when facing left
+        animationlistright.Add(1); //walking forward (0)
+        animationlistright.Add(2); //walking backward (1)
+        animationlistright.Add(3); //dashing forward (2)
+        animationlistright.Add(4); //dashing backward (3)
+
+        //list used for directional animations for facing left
+        animationlistleft.Add(2); //walking forward (0)
+        animationlistleft.Add(1); //walking backward (1)
+        animationlistleft.Add(4); //dashing forward (2)
+        animationlistleft.Add(3); //dashing backward (3)
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        PlayerMovement();
+        if (player == 1) PlayerMovement(player1controls, getDirectionalAnimationlist());
+        if (player == 2) PlayerMovement(player2controls, getDirectionalAnimationlist());
+
     }
-    void ZachMovement(Vector3 zachdirection, float zachspeed, int animationstate)
+
+    List<int> getDirectionalAnimationlist()
     {
-        if (playerone && !islocked || playerone && animationstate == unlockkey)
+        if (facingright == true) return animationlistright;
+        else return animationlistleft;
+    }
+
+    void ZachMovement(Vector3 zachdirection, float zachspeed, int animationstate) //determines which way the model should be facing, the current movement speed and direction, and what animation is being played. verifies the unlockkey matches if movement is locked
+    {
+        if (facingright && !islocked || facingright && animationstate == unlockkey)
         {
             keyPress = true;
             transform.Translate(zachdirection * zachspeed * Time.deltaTime, transform);
             animator.SetInteger("AnimationState", animationstate);
             spriteRenderer.flipX = false;
         }
-        if (!playerone && !islocked || !playerone && animationstate == unlockkey)
+        if (!facingright && !islocked || !facingright && animationstate == unlockkey)
         {
             keyPress = true;
             transform.Translate(zachdirection * zachspeed * Time.deltaTime, transform);
@@ -51,7 +92,7 @@ public class Movement : MonoBehaviour
         }
     }
 
-    void Movementlock(double delaytime, int currentkey)
+    void Movementlock(double delaytime, int currentkey) //animations will not be able to play if they dont match the unlockkey after this method is called, if the method is called after unlocktime it will unlock the movement and allow any key to be pressed
     {
         if(!islocked)
         {
@@ -66,21 +107,13 @@ public class Movement : MonoBehaviour
         }
         
     }
-    bool getKeyPressed(KeyCode yes)
+    float getKeyPressed(string yes) //returns the axis number coresponding to the key being pressed, returns 0 if movement is locked
     {
         if (!islocked)
         {
-            return Input.GetKey(yes);
+            return Input.GetAxis(yes);
         }
-        else return false;
-    }
-    bool getKeyDown(KeyCode yes)
-    {
-        if (!islocked)
-        {
-            return Input.GetKeyDown(yes);
-        }
-        else return false;
+        else return 0;
     }
     bool getKeyUp(KeyCode yes)
     {
@@ -90,34 +123,41 @@ public class Movement : MonoBehaviour
         }
         else return false;
     }
-    void PlayerMovement()
+
+    bool verifyUnlockKey(int keyPressed) //Checks if the input key matches the current unlockkey
+    {
+        if (keyPressed == unlockkey) return true;
+        else return false;
+    }
+
+    void PlayerMovement(List<string> controls, List<int> directionalnumber) // determines what key the player is pressing or locked into, and matches it with its coresponding animation.
     {
         keyPress = false;
-        if (getKeyPressed(KeyCode.D) || unlockkey == 3)
+        if (getKeyPressed(controls[0]) > 0|| verifyUnlockKey(directionalnumber[2]))
         {
-            if (getKeyDown(KeyCode.LeftShift) || unlockkey == 3)
+            if (getKeyPressed(controls[1]) > 0 || unlockkey == directionalnumber[2])
             {
-                Movementlock(0.25, 3);
-                ZachMovement(Vector2.right, ((float)unlocktime - Time.time) * dashmultiplyer, 3);
+                Movementlock(0.25, directionalnumber[2]);
+                ZachMovement(Vector2.right, ((float)unlocktime - Time.time) * dashmultiplyer, directionalnumber[2]);
             }
             else
             {
-                ZachMovement(Vector2.right, speed, 1);
+                ZachMovement(Vector2.right, speed, directionalnumber[0]);
             }
         }
-        if (getKeyPressed(KeyCode.A) || unlockkey == 4)
+        if (getKeyPressed(controls[0]) < 0 || verifyUnlockKey(directionalnumber[3]))
         {
-            if (getKeyDown(KeyCode.LeftShift) || unlockkey == 4)
+            if (getKeyPressed(controls[1]) > 0 || verifyUnlockKey(directionalnumber[3]))
             {
-                Movementlock(0.25, 4);
-                ZachMovement(Vector2.left, ((float)unlocktime - Time.time) * dashmultiplyer, 4);
+                Movementlock(0.25, directionalnumber[3]);
+                ZachMovement(Vector2.left, ((float)unlocktime - Time.time) * dashmultiplyer, directionalnumber[3]);
             }
             else
             {
-                ZachMovement(Vector2.left, speed, 2);
+                ZachMovement(Vector2.left, speed, directionalnumber[1]);
             }
         }
-        if (getKeyDown(KeyCode.W) || unlockkey == 5)
+        if (getKeyPressed(controls[2]) > 0 || unlockkey == 5)
         {
             Movementlock(0.5, 5);
             if (Time.time >= unlocktime - .25 && islocked)
@@ -129,28 +169,18 @@ public class Movement : MonoBehaviour
                 ZachMovement(Vector3.up, speed * jumpmultiplyer, 5);
             }
         }
-        if (getKeyPressed(KeyCode.S) || unlockkey == 7 || unlockkey == 6)
+        
+        if (getKeyPressed(controls[3]) > 0)
         {
-            if (keyPress)
-            {
-                Movementlock(0.1, 7);
-                ZachMovement(Vector3.down, 0, 7);
-            }
-            if (!keyPress)
-            {
-                Movementlock(0.1, 6);
-                ZachMovement(Vector3.down, 0, 6);
-            }
-            else
-            {
-                ZachMovement(Vector3.down, 0, 8);
-            }
-        }
-
+            ZachMovement(Vector3.down, 0, 7);
+        }  
+         
         //will play if nothing else is being done
         if (!keyPress && !islocked)
         {
             ZachMovement(Vector3.up, 0, 0);
+            keyPress = false;
+            
         }
     }
 
