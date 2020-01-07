@@ -9,7 +9,6 @@ public class Movement : MonoBehaviour
     private Vector2 position;
     public Animator animator;
     private SpriteRenderer spriteRenderer;
-    private string moveLock;
     public int dashmultiplyer;
     private bool islocked;
     private double unlocktime;
@@ -23,11 +22,14 @@ public class Movement : MonoBehaviour
     private List<string> player2controls = new List<string>();
     private List<int> animationlistright = new List<int>();
     private List<int> animationlistleft = new List<int>();
+    private float elevation;
+    private bool isfalling;
 
 
     // Use this for initialization
     void Start()
     {
+        isfalling = false;
         position = gameObject.transform.position;
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -63,6 +65,8 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        elevation = transform.position.y; // gets current y value of player
+        fallCheck();
         if (player == 1) PlayerMovement(player1controls, getDirectionalAnimationlist());
         if (player == 2) PlayerMovement(player2controls, getDirectionalAnimationlist());
 
@@ -133,33 +137,35 @@ public class Movement : MonoBehaviour
     void PlayerMovement(List<string> controls, List<int> directionalnumber) // determines what key the player is pressing or locked into, and matches it with its coresponding animation.
     {
         keyPress = false;
-        if (getKeyPressed(controls[0]) > 0|| verifyUnlockKey(directionalnumber[2]))
+        if (getKeyPressed(controls[0]) > 0|| verifyUnlockKey(directionalnumber[2])) // walking and dashing right
         {
-            if (getKeyPressed(controls[1]) > 0 || unlockkey == directionalnumber[2])
+            if (getKeyPressed(controls[1]) > 0 || unlockkey == directionalnumber[2]) //dashing right
             {
                 Movementlock(0.25, directionalnumber[2]);
                 ZachMovement(Vector2.right, ((float)unlocktime - Time.time) * dashmultiplyer, directionalnumber[2]);
             }
-            else
+            else //walking right
             {
                 ZachMovement(Vector2.right, speed, directionalnumber[0]);
             }
         }
-        if (getKeyPressed(controls[0]) < 0 || verifyUnlockKey(directionalnumber[3]))
+
+        if (getKeyPressed(controls[0]) < 0 || verifyUnlockKey(directionalnumber[3])) //walking and dashing left
         {
-            if (getKeyPressed(controls[1]) > 0 || verifyUnlockKey(directionalnumber[3]))
+            if (getKeyPressed(controls[1]) > 0 || verifyUnlockKey(directionalnumber[3])) //dashing left
             {
                 Movementlock(0.25, directionalnumber[3]);
                 ZachMovement(Vector2.left, ((float)unlocktime - Time.time) * dashmultiplyer, directionalnumber[3]);
             }
-            else
+            else //walking left
             {
                 ZachMovement(Vector2.left, speed, directionalnumber[1]);
             }
         }
-        if (getKeyPressed(controls[2]) > 0 || unlockkey == 5)
+
+        if (getKeyPressed(controls[2]) > 0 || unlockkey == 5) //jumping
         {
-            Movementlock(0.5, 5);
+            Movementlock(.5, 5);
             if (Time.time >= unlocktime - .25 && islocked)
             {
                 ZachMovement(Vector3.down, speed * jumpmultiplyer, 5);
@@ -170,18 +176,45 @@ public class Movement : MonoBehaviour
             }
         }
         
-        if (getKeyPressed(controls[3]) > 0)
+        if (getKeyPressed(controls[3]) > 0) //crouching (WIP)
         {
             ZachMovement(Vector3.down, 0, 7);
         }  
-         
-        //will play if nothing else is being done
-        if (!keyPress && !islocked)
+
+        if (!keyPress && !islocked || unlockkey == 0) //idle
         {
+            Movementlock(0, 0);
             ZachMovement(Vector3.up, 0, 0);
             keyPress = false;
             
         }
+    }
+
+    void fallCheck()
+    {
+        if(!islocked && elevation > 0 || elevation > 0 && isfalling)
+        {
+            islocked = true;
+            isfalling = true;
+            unlockkey = 0;
+            ZachMovement(Vector2.down, speed, 0);
+        }
+        else if(isfalling && elevation <= 0)
+        {
+            islocked = false;
+            isfalling = false;
+            unlockkey = 9999;
+        }
+    } // checks if the player's base elevation is too high
+
+    void endlag(float delay) // forces the player into an idlepose for a given amount of time
+    {
+        Movementlock(delay, 0);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        speed = 0;
     }
 
 
