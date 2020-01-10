@@ -238,7 +238,7 @@ MonoBehaviour:
   speed: 20
   animator: {fileID: 339852893}
   dashmultiplyer: 800
-  jumpmultiplyer: 8
+  jumpmultiplyer: 4
   facingright: 1
   dashdelay: 0
   player: 1
