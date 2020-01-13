@@ -34,6 +34,7 @@ namespace Assets.Scripts
         void Start()
         {
             isfalling = false;
+            
             position = gameObject.transform.position;
             animator = GetComponent<Animator>();
             spriteRenderer = GetComponent<SpriteRenderer>();
@@ -69,6 +70,7 @@ namespace Assets.Scripts
         // Update is called once per frame
         void Update()
         {
+            mvnt = GetComponent<Movement2D>();
             elevation = transform.position.y; // gets current y value of player
             fallCheck();
             if (player == 1) PlayerMovement(player1controls, getDirectionalAnimationlist());
@@ -82,12 +84,12 @@ namespace Assets.Scripts
             else return animationlistleft;
         }
 
-        void ZachMovement(Vector3 zachdirection, float zachspeed, int animationstate) //determines which way the model should be facing, the current movement speed and direction, and what animation is being played. verifies the unlockkey matches if movement is locked
+        void ZachMovement(Vector2 zachdirection, float zachspeed, int animationstate) //determines which way the model should be facing, the current movement speed and direction, and what animation is being played. verifies the unlockkey matches if movement is locked
         {
             if (facingright && !islocked || facingright && animationstate == unlockkey)
             {
                 keyPress = true;
-                transform.Translate(zachdirection * zachspeed * Time.deltaTime, transform);
+                mvnt.MoveAlongX(Input.GetAxis("P1X") * zachspeed * Time.deltaTime);
                 animator.SetInteger("AnimationState", animationstate);
                 spriteRenderer.flipX = false;
             }
@@ -172,23 +174,23 @@ namespace Assets.Scripts
                 Movementlock(.5, 5);
                 if (Time.time >= unlocktime - .25 && islocked)
                 {
-                    ZachMovement(Vector3.down, speed * jumpmultiplyer, 5);
+                    ZachMovement(Vector2.down, speed * jumpmultiplyer, 5);
                 }
                 else if (Time.time <= unlocktime - .25 && islocked)
                 {
-                    ZachMovement(Vector3.up, speed * jumpmultiplyer, 5);
+                    ZachMovement(Vector2.up, speed * jumpmultiplyer, 5);
                 }
             }
 
             if (getKeyPressed(controls[3]) > 0) //crouching (WIP)
             {
-                ZachMovement(Vector3.down, 0, 7);
+                ZachMovement(Vector2.down, 0, 7);
             }
 
             if (!keyPress && !islocked || unlockkey == 0) //idle
             {
                 Movementlock(0, 0);
-                ZachMovement(Vector3.up, 0, 0);
+                ZachMovement(Vector2.up, 0, 0);
                 keyPress = false;
 
             }
@@ -219,10 +221,6 @@ namespace Assets.Scripts
         private void OnTriggerEnter(Collider other)
         {
             speed = 0;
-        }
-        void setdirection()
-        {
-            if(directionint)
         }
 
 
