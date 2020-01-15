@@ -218,9 +218,16 @@ namespace Assets.Scripts
             Movementlock(delay, 0);
         }
 
-        private void OnTriggerEnter(Collider other)
+        void executeAttack(float x, float y)
         {
-            speed = 0;
+            var hurtbox = gameObject.AddComponent<BoxCollider>();
+            hurtbox.transform.position.Set(x, y, 0);
+
+        }
+        
+        void getHurt(int damage, int stuntype, float speed, float direction )
+        {
+
         }
 
 
