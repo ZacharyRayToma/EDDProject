@@ -29,6 +29,8 @@ namespace Assets.Scripts
         private bool isfalling;
         private Movement2D mvnt = null;
         private float HEALTH;
+        private GameObject otherPlayer;
+        private Movement otherScript;
 
 
         // Use this for initialization
@@ -36,7 +38,8 @@ namespace Assets.Scripts
         {
             HEALTH = 100;
             isfalling = false;
-            
+            otherPlayer = GameObject.FindGameObjectWithTag(findOtherPlayer()); // if Player one, sets to "P2", and vice versa
+            otherScript = otherPlayer.GetComponent<Movement>(); // this script, but for the other player
             position = gameObject.transform.position;
             animator = GetComponent<Animator>();
             spriteRenderer = GetComponent<SpriteRenderer>();
@@ -48,12 +51,14 @@ namespace Assets.Scripts
             player1controls.Add("DashP1");  //1
             player1controls.Add("JumpP1");  //2
             player1controls.Add("CrouchP1");    //3
+            player1controls.Add("LightPunchP1");    //4
 
             //controls for player 2 (names corespond to the names set in unity), the commented number is its number in the list counting from 0
             player2controls.Add("P2X"); //0
             player2controls.Add("DashP2");  //1
             player2controls.Add("JumpP2");  //2
             player2controls.Add("CrouchP2");    //3
+            player1controls.Add("LightPunchP2");    //4
 
             //list used for directional animations for facing right, added because incorrect animations when facing left
             animationlistright.Add(1); //walking forward (0)
@@ -189,6 +194,11 @@ namespace Assets.Scripts
                 ZachMovement(0, 7, true, 1);
             }
 
+            if (false) // Light Punch (WIP)
+            {
+
+            }
+
             if (!keyPress && !islocked || unlockkey == 0) //idle
             {
                 Movementlock(0, 0);
@@ -219,19 +229,23 @@ namespace Assets.Scripts
         {
             Movementlock(delay, 0);
         }
-
-        void executeAttack(float x, float y)
-        {
-            var hurtbox = gameObject.AddComponent<BoxCollider>();
-            hurtbox.transform.position.Set(x, y, 0);
-
-        }
         
-        void getHurt(int damage, int stuntype, float speed, int direction, bool isupward )
+        void hurtOtherPlayer(int damage, int stuntype, float speed, int direction, bool isupward, float stuntime )
+        {
+            otherScript.getHurt(damage, stuntype, speed, direction, isupward, stuntime);
+        }
+
+        void getHurt(int damage, int stuntype, float speed, int direction, bool isupward, float stuntime)
         {
             HEALTH = HEALTH - damage;
+            Movementlock(stuntime, stuntype);
             ZachMovement(speed, stuntype, isupward, direction);
         }
+
+        string findOtherPlayer()
+        {
+            if (player == 1) return "P1"; else return "P2";
+        } // returns P2 if you are player 1, vice versa
 
 
     }
