@@ -9,7 +9,7 @@ namespace Assets.Scripts
     {
         private int directionlist;
         public float speed;
-        private Vector2 position;
+        private float position;
         public Animator animator;
         private SpriteRenderer spriteRenderer;
         public int dashmultiplyer;
@@ -31,6 +31,7 @@ namespace Assets.Scripts
         private float HEALTH;
         private GameObject otherPlayer;
         private Movement otherScript;
+        private float distance;
 
 
         // Use this for initialization
@@ -40,7 +41,7 @@ namespace Assets.Scripts
             isfalling = false;
             otherPlayer = GameObject.FindGameObjectWithTag(findOtherPlayer()); // if Player one, sets to "P2", and vice versa
             otherScript = otherPlayer.GetComponent<Movement>(); // this script, but for the other player
-            position = gameObject.transform.position;
+            position = gameObject.transform.position.x;
             animator = GetComponent<Animator>();
             spriteRenderer = GetComponent<SpriteRenderer>();
             Application.targetFrameRate = 60;
@@ -80,6 +81,7 @@ namespace Assets.Scripts
             mvnt = GetComponent<Movement2D>();
             elevation = transform.position.y; // gets current y value of player
             fallCheck();
+            distance = getDistance();
             if (player == 1) PlayerMovement(player1controls, getDirectionalAnimationlist());
             if (player == 2) PlayerMovement(player2controls, getDirectionalAnimationlist());
 
@@ -230,22 +232,38 @@ namespace Assets.Scripts
             Movementlock(delay, 0);
         }
         
-        void hurtOtherPlayer(int damage, int stuntype, float speed, int direction, bool isupward, float stuntime )
+        void hurtOtherPlayer(int damage, int stuntype, float speed, int direction, bool isupward, float stuntime, float range )
         {
-            otherScript.getHurt(damage, stuntype, speed, direction, isupward, stuntime);
+            otherScript.getHurt(damage, stuntype, speed, direction, isupward, stuntime, range);
         }
 
-        void getHurt(int damage, int stuntype, float speed, int direction, bool isupward, float stuntime)
+        void getHurt(int damage, int stuntype, float speed, int direction, bool isupward, float stuntime, float range)
         {
-            HEALTH = HEALTH - damage;
-            Movementlock(stuntime, stuntype);
-            ZachMovement(speed, stuntype, isupward, direction);
+            if (getDistance() < range)
+            {
+                HEALTH = HEALTH - damage;
+                Movementlock(stuntime, stuntype);
+                ZachMovement(speed, stuntype, isupward, direction);
+            }
         }
 
         string findOtherPlayer()
         {
             if (player == 1) return "P1"; else return "P2";
         } // returns P2 if you are player 1, vice versa
+
+        float getDistance()
+        {
+            float distance;
+            float otherPosition = getPosition(otherPlayer);
+            distance = Mathf.Abs(position - otherPosition);
+            return distance;
+        }
+
+        float getPosition(GameObject positionObject)
+        {
+            return positionObject.transform.position.x;
+        }
 
 
     }
