@@ -9,7 +9,7 @@ namespace Assets.Scripts
     {
         private int directionlist;
         public float speed;
-        private float position;
+        public float position;
         public Animator animator;
         private SpriteRenderer spriteRenderer;
         public int dashmultiplyer;
@@ -28,44 +28,51 @@ namespace Assets.Scripts
         private float elevation;
         private bool isfalling;
         private Movement2D mvnt = null;
-        private float HEALTH;
+        public float HEALTH;
         private GameObject otherPlayer;
         private Movement otherScript;
         private float distance;
+        private bool stunned;
 
 
         // Use this for initialization
         void Start()
         {
-            HEALTH = 100;
-            isfalling = false;
-            otherPlayer = GameObject.FindGameObjectWithTag(findOtherPlayer()); // if Player one, sets to "P2", and vice versa
-            otherScript = otherPlayer.GetComponent<Movement>(); // this script, but for the other player
-            position = gameObject.transform.position.x;
-            animator = GetComponent<Animator>();
-            spriteRenderer = GetComponent<SpriteRenderer>();
-            Application.targetFrameRate = 60;
-            islocked = false;
-            keyPress = false;
+            stunned = false; //whether or not the player is stunned, if the player is stunned they shouldnt be able to take damage
+            HEALTH = 100; //Health of the player, the player should lose if this number reaches zero. In all caps in honor of Keith's favorite band
+            isfalling = false; // whether or not the player is involentarily falling, they should not be able to move if this is true
+            otherPlayer = GameObject.FindGameObjectWithTag(findOtherPlayer()); // The referece to the other player's object
+            otherScript = otherPlayer.GetComponent<Movement>(); // The other player's movement script, used to change its public variables
+            position = gameObject.transform.position.x; // X position of this object
+            animator = GetComponent<Animator>(); // this object's animator, used to change animations manually
+            spriteRenderer = GetComponent<SpriteRenderer>(); // this object's sprite renderer, but be useful later
+            Application.targetFrameRate = 60; // What the framerate should be, in order to keep the game from running too fast since certain mechanics are frame-based.
+            islocked = false; //If this is true, the player will not be able to do a move unless the action matches their unlock key
+            keyPress = false; //this should become true if a key (which is bound to an action) is being pressed
+
+
             //controls for player 1 (names corespond to the names set in unity), the commented number is its number in the list counting from 0
             player1controls.Add("P1X"); //0
             player1controls.Add("DashP1");  //1
             player1controls.Add("JumpP1");  //2
             player1controls.Add("CrouchP1");    //3
-            player1controls.Add("LightPunchP1");    //4
+            player1controls.Add("HeavyPunchP1");    //4
+
 
             //controls for player 2 (names corespond to the names set in unity), the commented number is its number in the list counting from 0
             player2controls.Add("P2X"); //0
             player2controls.Add("DashP2");  //1
             player2controls.Add("JumpP2");  //2
             player2controls.Add("CrouchP2");    //3
-            player1controls.Add("LightPunchP2");    //4
+            player1controls.Add("HeavyPunchP2");    //4
 
-            //list used for directional animations for facing right, added because incorrect animations when facing left
+
+            //list used for directional animations for facing right
             animationlistright.Add(1); //walking forward (0)
             animationlistright.Add(2); //walking backward (1)
             animationlistright.Add(3); //dashing forward (2)
             animationlistright.Add(4); //dashing backward (3)
+
 
             //list used for directional animations for facing left
             animationlistleft.Add(2); //walking forward (0)
@@ -237,7 +244,7 @@ namespace Assets.Scripts
             otherScript.getHurt(damage, stuntype, speed, direction, isupward, stuntime, range);
         }
 
-        void getHurt(int damage, int stuntype, float speed, int direction, bool isupward, float stuntime, float range)
+        public void getHurt(int damage, int stuntype, float speed, int direction, bool isupward, float stuntime, float range)
         {
             if (getDistance() < range)
             {
@@ -249,7 +256,7 @@ namespace Assets.Scripts
 
         string findOtherPlayer()
         {
-            if (player == 1) return "P1"; else return "P2";
+            if (player == 1) return "P2"; else return "P1";
         } // returns P2 if you are player 1, vice versa
 
         float getDistance()
