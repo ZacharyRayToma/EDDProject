@@ -64,7 +64,7 @@ namespace Assets.Scripts
             player2controls.Add("DashP2");  //1
             player2controls.Add("JumpP2");  //2
             player2controls.Add("CrouchP2");    //3
-            player1controls.Add("HeavyPunchP2");    //4
+            player2controls.Add("HeavyPunchP2");    //4
 
 
             //list used for directional animations for facing right
@@ -82,6 +82,7 @@ namespace Assets.Scripts
 
         }
 
+
         // Update is called once per frame
         void Update()
         {
@@ -93,6 +94,13 @@ namespace Assets.Scripts
             if (player == 2) PlayerMovement(player2controls, getDirectionalAnimationlist());
 
         }
+
+
+        void stunPlayer(int stuntype, float speed, bool isupward, float stuntime )
+        {
+
+        }
+
 
         List<int> getDirectionalAnimationlist()
         {
@@ -118,6 +126,7 @@ namespace Assets.Scripts
             }
         }
 
+
         void Movementlock(double delaytime, int currentkey) //animations will not be able to play if they dont match the unlockkey after this method is called, if the method is called after unlocktime it will unlock the movement and allow any key to be pressed
         {
             if (!islocked)
@@ -133,6 +142,8 @@ namespace Assets.Scripts
             }
 
         }
+
+
         float getKeyPressed(string yes) //returns the axis number coresponding to the key being pressed, returns 0 if movement is locked
         {
             if (!islocked)
@@ -141,6 +152,8 @@ namespace Assets.Scripts
             }
             else return 0;
         }
+
+
         bool getKeyUp(KeyCode yes)
         {
             if (!islocked)
@@ -150,11 +163,13 @@ namespace Assets.Scripts
             else return false;
         }
 
+
         bool verifyUnlockKey(int keyPressed) //Checks if the input key matches the current unlockkey
         {
             if (keyPressed == unlockkey) return true;
             else return false;
         }
+
 
         void PlayerMovement(List<string> controls, List<int> directionalnumber) // determines what key the player is pressing or locked into, and matches it with its coresponding animation.
         {
@@ -203,9 +218,11 @@ namespace Assets.Scripts
                 ZachMovement(0, 7, true, 1);
             }
 
-            if (false) // Light Punch (WIP)
+            if (getKeyPressed(controls[4]) > 0 || unlockkey == 9) // heavy Punch (WIP)
             {
-
+                Movementlock(.65, 9);
+                ZachMovement(0, 9, false, 1);
+                hurtOtherPlayer(10, 1 ,1 ,1 , false, 1, 10);
             }
 
             if (!keyPress && !islocked || unlockkey == 0) //idle
@@ -234,15 +251,18 @@ namespace Assets.Scripts
             }
         } // checks if the player's base elevation is too high
 
+
         void endlag(float delay) // forces the player into an idlepose for a given amount of time
         {
             Movementlock(delay, 0);
         }
+
         
         void hurtOtherPlayer(int damage, int stuntype, float speed, int direction, bool isupward, float stuntime, float range )
         {
             otherScript.getHurt(damage, stuntype, speed, direction, isupward, stuntime, range);
         }
+
 
         public void getHurt(int damage, int stuntype, float speed, int direction, bool isupward, float stuntime, float range)
         {
@@ -254,10 +274,12 @@ namespace Assets.Scripts
             }
         }
 
+
         string findOtherPlayer()
         {
             if (player == 1) return "P2"; else return "P1";
         } // returns P2 if you are player 1, vice versa
+
 
         float getDistance()
         {
@@ -267,10 +289,12 @@ namespace Assets.Scripts
             return distance;
         }
 
+
         float getPosition(GameObject positionObject)
         {
             return positionObject.transform.position.x;
         }
+
 
 
     }
