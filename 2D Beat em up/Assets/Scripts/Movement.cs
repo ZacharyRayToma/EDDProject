@@ -96,9 +96,10 @@ namespace Assets.Scripts
         }
 
 
-        void stunPlayer(int stuntype, float speed, bool isupward, float stuntime )
+        void stunPlayer(int stuntype, float speed, bool isupward, float stuntime, int direction )
         {
-
+            otherScript.Movementlock(stuntime, stuntype);
+            otherScript.ZachMovement(speed, stuntype, isupward, direction);
         }
 
 
@@ -222,7 +223,7 @@ namespace Assets.Scripts
             {
                 Movementlock(.65, 9);
                 ZachMovement(0, 9, false, 1);
-                hurtOtherPlayer(10, 1 ,1 ,1 , false, 1, 10);
+                hurtOtherPlayer(10, 100 ,1 ,1 , false, 1, 100);
             }
 
             if (!keyPress && !islocked || unlockkey == 0) //idle
@@ -258,13 +259,16 @@ namespace Assets.Scripts
         }
 
         
-        void hurtOtherPlayer(int damage, int stuntype, float speed, int direction, bool isupward, float stuntime, float range )
+        void hurtOtherPlayer(float damage, int stuntype, float speed, int direction, bool isupward, float stuntime, float range )
         {
-            otherScript.getHurt(damage, stuntype, speed, direction, isupward, stuntime, range);
+            if (getDistance() < range ) {
+                setHealth(getHealth(otherPlayer) - damage, otherPlayer);
+                stunPlayer(stuntype, speed, isupward, stuntime, direction);
+            }
         }
 
 
-        public void getHurt(int damage, int stuntype, float speed, int direction, bool isupward, float stuntime, float range)
+        public void getHurt(float damage, int stuntype, float speed, int direction, bool isupward, float stuntime, float range)
         {
             if (getDistance() < range)
             {
@@ -293,6 +297,16 @@ namespace Assets.Scripts
         float getPosition(GameObject positionObject)
         {
             return positionObject.transform.position.x;
+        }
+
+        float getHealth(GameObject healthObject)
+        {
+            return healthObject.GetComponent<Movement>().HEALTH;
+        }
+
+        void setHealth(float newhealth, GameObject healthObject)
+        {
+            newhealth = healthObject.GetComponent<Movement>().HEALTH;
         }
 
 
