@@ -33,6 +33,11 @@ namespace Assets.Scripts
         private Movement otherScript;
         private float distance;
         private bool stunned;
+        private float stuntimePlaceholder;
+        private float stunspeedplaceholder;
+        private int stuntypeplaceholder;
+        private bool stunupwardplaceholder;
+        private int stundirectionplaceholder;
 
 
         // Use this for initialization
@@ -49,6 +54,8 @@ namespace Assets.Scripts
             Application.targetFrameRate = 60; // What the framerate should be, in order to keep the game from running too fast since certain mechanics are frame-based.
             islocked = false; //If this is true, the player will not be able to do a move unless the action matches their unlock key
             keyPress = false; //this should become true if a key (which is bound to an action) is being pressed
+            
+
 
 
             //controls for player 1 (names corespond to the names set in unity), the commented number is its number in the list counting from 0
@@ -99,7 +106,13 @@ namespace Assets.Scripts
         void stunPlayer(int stuntype, float speed, bool isupward, float stuntime, int direction )
         {
             otherScript.Movementlock(stuntime, stuntype);
-            otherScript.ZachMovement(speed, stuntype, isupward, direction);
+            otherScript.stunned = true;
+            otherScript.stunspeedplaceholder = speed;
+            otherScript.stuntimePlaceholder = stuntime;
+            otherScript.stuntypeplaceholder = stuntype;
+            otherScript.stunupwardplaceholder = isupward;
+            otherScript.stundirectionplaceholder = direction;
+
         }
 
 
@@ -139,6 +152,7 @@ namespace Assets.Scripts
             else if (unlocktime <= Time.time)
             {
                 islocked = false;
+                stunned = false;
                 unlockkey = 9999;
             }
 
@@ -175,6 +189,12 @@ namespace Assets.Scripts
         void PlayerMovement(List<string> controls, List<int> directionalnumber) // determines what key the player is pressing or locked into, and matches it with its coresponding animation.
         {
             keyPress = false;
+            if (stunned == true)
+            {
+                Movementlock(stuntimePlaceholder, unlockkey);
+                ZachMovement(stunspeedplaceholder, stuntypeplaceholder, stunupwardplaceholder, stundirectionplaceholder);
+
+            }
             if (getKeyPressed(controls[0]) > 0 || verifyUnlockKey(directionalnumber[2])) // walking and dashing right
             {
                 if (getKeyPressed(controls[1]) > 0 || unlockkey == directionalnumber[2]) //dashing right
