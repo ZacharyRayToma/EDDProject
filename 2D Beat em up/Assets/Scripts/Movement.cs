@@ -33,7 +33,7 @@ namespace Assets.Scripts
         private Movement otherScript;
         private float distance;
         private bool stunned;
-        private float stuntimePlaceholder;
+        private double stuntimePlaceholder;
         private float stunspeedplaceholder;
         private int stuntypeplaceholder;
         private bool stunupwardplaceholder;
@@ -48,7 +48,6 @@ namespace Assets.Scripts
             isfalling = false; // whether or not the player is involentarily falling, they should not be able to move if this is true
             otherPlayer = GameObject.FindGameObjectWithTag(findOtherPlayer()); // The referece to the other player's object
             otherScript = otherPlayer.GetComponent<Movement>(); // The other player's movement script, used to change its public variables
-            position = gameObject.transform.position.x; // X position of this object
             animator = GetComponent<Animator>(); // this object's animator, used to change animations manually
             spriteRenderer = GetComponent<SpriteRenderer>(); // this object's sprite renderer, but be useful later
             Application.targetFrameRate = 60; // What the framerate should be, in order to keep the game from running too fast since certain mechanics are frame-based.
@@ -93,6 +92,7 @@ namespace Assets.Scripts
         // Update is called once per frame
         void Update()
         {
+            position = gameObject.transform.position.x; // X position of this object
             mvnt = GetComponent<Movement2D>();
             elevation = transform.position.y; // gets current y value of player
             fallCheck();
@@ -103,7 +103,7 @@ namespace Assets.Scripts
         }
 
 
-        void stunPlayer(int stuntype, float speed, bool isupward, float stuntime, int direction )
+        void stunPlayer(int stuntype, float speed, bool isupward, double stuntime, int direction )
         {
             otherScript.Movementlock(stuntime, stuntype);
             otherScript.stunned = true;
@@ -242,8 +242,8 @@ namespace Assets.Scripts
             if (getKeyPressed(controls[4]) > 0 || unlockkey == 9) // heavy Punch (WIP)
             {
                 Movementlock(.65, 9);
-                ZachMovement(0, 9, false, 1);
-                hurtOtherPlayer(10, 100 ,1 ,1 , false, 1, 100);
+                ZachMovement(1, 9, false, 1);
+                hurtOtherPlayer(10, 100 ,1 ,1 , false, .25, 100);
             }
 
             if (!keyPress && !islocked || unlockkey == 0) //idle
@@ -279,16 +279,16 @@ namespace Assets.Scripts
         }
 
         
-        void hurtOtherPlayer(float damage, int stuntype, float speed, int direction, bool isupward, float stuntime, float range )
+        void hurtOtherPlayer(float damage, int stuntype, float speed, int direction, bool isupward, double stuntime, float range )
         {
             if (getDistance() < range ) {
-                setHealth(getHealth(otherPlayer) - damage, otherPlayer);
+                otherScript.setHealth(damage);
                 stunPlayer(stuntype, speed, isupward, stuntime, direction);
             }
         }
 
 
-        public void getHurt(float damage, int stuntype, float speed, int direction, bool isupward, float stuntime, float range)
+        public void getHurt(float damage, int stuntype, float speed, int direction, bool isupward, double stuntime, float range)
         {
             if (getDistance() < range)
             {
@@ -308,7 +308,7 @@ namespace Assets.Scripts
         float getDistance()
         {
             float distance;
-            float otherPosition = getPosition(otherPlayer);
+            float otherPosition = otherScript.position;
             distance = Mathf.Abs(position - otherPosition);
             return distance;
         }
@@ -324,9 +324,9 @@ namespace Assets.Scripts
             return healthObject.GetComponent<Movement>().HEALTH;
         }
 
-        void setHealth(float newhealth, GameObject healthObject)
+        void setHealth(float damage)
         {
-            newhealth = healthObject.GetComponent<Movement>().HEALTH;
+            HEALTH = HEALTH - damage;
         }
 
 
