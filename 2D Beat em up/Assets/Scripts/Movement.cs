@@ -115,6 +115,11 @@ namespace Assets.Scripts
 
         }
 
+        int getDirection()
+        {
+            if (facingright == true) return 1; else return -1;
+        }
+
 
         List<int> getDirectionalAnimationlist()
         {
@@ -242,8 +247,8 @@ namespace Assets.Scripts
             if (getKeyPressed(controls[4]) > 0 || unlockkey == 9) // heavy Punch (WIP)
             {
                 Movementlock(.65, 9);
-                ZachMovement(1, 9, false, 1);
-                hurtOtherPlayer(10, 100 ,1 ,1 , false, .25, 100);
+                ZachMovement(1, 9, false, getDirection());
+                hurtOtherPlayer(10, 100, 1, getDirection(), false, .25, 20);
             }
 
             if (!keyPress && !islocked || unlockkey == 0) //idle
