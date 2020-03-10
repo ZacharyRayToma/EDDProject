@@ -33,6 +33,11 @@ namespace Assets.Scripts
         private Movement otherScript;
         private float distance;
         private bool stunned;
+        private double stuntimePlaceholder;
+        private float stunspeedplaceholder;
+        private int stuntypeplaceholder;
+        private bool stunupwardplaceholder;
+        private int stundirectionplaceholder;
 
 
         // Use this for initialization
@@ -43,12 +48,13 @@ namespace Assets.Scripts
             isfalling = false; // whether or not the player is involentarily falling, they should not be able to move if this is true
             otherPlayer = GameObject.FindGameObjectWithTag(findOtherPlayer()); // The referece to the other player's object
             otherScript = otherPlayer.GetComponent<Movement>(); // The other player's movement script, used to change its public variables
-            position = gameObject.transform.position.x; // X position of this object
             animator = GetComponent<Animator>(); // this object's animator, used to change animations manually
             spriteRenderer = GetComponent<SpriteRenderer>(); // this object's sprite renderer, but be useful later
             Application.targetFrameRate = 60; // What the framerate should be, in order to keep the game from running too fast since certain mechanics are frame-based.
             islocked = false; //If this is true, the player will not be able to do a move unless the action matches their unlock key
             keyPress = false; //this should become true if a key (which is bound to an action) is being pressed
+            
+
 
 
             //controls for player 1 (names corespond to the names set in unity), the commented number is its number in the list counting from 0
@@ -57,6 +63,12 @@ namespace Assets.Scripts
             player1controls.Add("JumpP1");  //2
             player1controls.Add("CrouchP1");    //3
             player1controls.Add("HeavyPunchP1");    //4
+            player1controls.Add("LightPunchP1");     //5
+            player1controls.Add("HeavyKickP1");     //6
+            player1controls.Add("LightKickP1");     //7
+            player1controls.Add("SpecialButtonP1");     //8
+            player1controls.Add("BlockP1");     //9
+            player1controls.Add("DodgeP1");     //10
 
 
             //controls for player 2 (names corespond to the names set in unity), the commented number is its number in the list counting from 0
@@ -65,6 +77,12 @@ namespace Assets.Scripts
             player2controls.Add("JumpP2");  //2
             player2controls.Add("CrouchP2");    //3
             player2controls.Add("HeavyPunchP2");    //4
+            player2controls.Add("LightPunchP2");     //5
+            player2controls.Add("HeavyKickP2");     //6
+            player2controls.Add("LightKickP2");     //7
+            player2controls.Add("SpecialButtonP2");     //8
+            player2controls.Add("BlockP2");     //9
+            player2controls.Add("DodgeP2");     //10
 
 
             //list used for directional animations for facing right
@@ -86,6 +104,7 @@ namespace Assets.Scripts
         // Update is called once per frame
         void Update()
         {
+            position = gameObject.transform.position.x; // X position of this object
             mvnt = GetComponent<Movement2D>();
             elevation = transform.position.y; // gets current y value of player
             fallCheck();
@@ -96,9 +115,21 @@ namespace Assets.Scripts
         }
 
 
-        void stunPlayer(int stuntype, float speed, bool isupward, float stuntime )
+        void stunPlayer(int stuntype, float speed, bool isupward, double stuntime, int direction )
         {
+            otherScript.Movementlock(stuntime, stuntype);
+            otherScript.stunned = true;
+            otherScript.stunspeedplaceholder = speed;
+            otherScript.stuntimePlaceholder = stuntime;
+            otherScript.stuntypeplaceholder = stuntype;
+            otherScript.stunupwardplaceholder = isupward;
+            otherScript.stundirectionplaceholder = direction;
 
+        }
+
+        int getDirection()
+        {
+            if (facingright == true) return 1; else return -1;
         }
 
 
@@ -138,6 +169,7 @@ namespace Assets.Scripts
             else if (unlocktime <= Time.time)
             {
                 islocked = false;
+                stunned = false;
                 unlockkey = 9999;
             }
 
@@ -174,6 +206,12 @@ namespace Assets.Scripts
         void PlayerMovement(List<string> controls, List<int> directionalnumber) // determines what key the player is pressing or locked into, and matches it with its coresponding animation.
         {
             keyPress = false;
+            if (stunned == true)
+            {
+                Movementlock(stuntimePlaceholder, unlockkey);
+                ZachMovement(stunspeedplaceholder, stuntypeplaceholder, stunupwardplaceholder, stundirectionplaceholder);
+
+            }
             if (getKeyPressed(controls[0]) > 0 || verifyUnlockKey(directionalnumber[2])) // walking and dashing right
             {
                 if (getKeyPressed(controls[1]) > 0 || unlockkey == directionalnumber[2]) //dashing right
@@ -218,11 +256,71 @@ namespace Assets.Scripts
                 ZachMovement(0, 7, true, 1);
             }
 
-            if (getKeyPressed(controls[4]) > 0 || unlockkey == 9) // heavy Punch (WIP)
+            if (getKeyPressed(controls[4]) > 0 || unlockkey == 9) // heavy Punch
             {
                 Movementlock(.65, 9);
-                ZachMovement(0, 9, false, 1);
-                hurtOtherPlayer(10, 1 ,1 ,1 , false, 1, 10);
+                ZachMovement(1, 9, false, getDirection());
+                hurtOtherPlayer(10, 100, 1, getDirection(), false, .25, 20);
+            }
+            if (getKeyPressed(controls[5]) > 0 || unlockkey == 10) // light Punch
+            {
+                Movementlock(.65, 9);
+                ZachMovement(1, 9, false, getDirection());
+                hurtOtherPlayer(10, 100, 1, getDirection(), false, .25, 20);
+            }
+            if (getKeyPressed(controls[6]) > 0 || unlockkey == 11) // heavy Kick
+            {
+                Movementlock(.65, 9);
+                ZachMovement(1, 9, false, getDirection());
+                hurtOtherPlayer(10, 100, 1, getDirection(), false, .25, 20);
+            }
+            if (getKeyPressed(controls[7]) > 0 || unlockkey == 12) // light kick
+            {
+                Movementlock(.65, 9);
+                ZachMovement(1, 9, false, getDirection());
+                hurtOtherPlayer(10, 100, 1, getDirection(), false, .25, 20);
+            }
+            if (getKeyPressed(controls[8]) > 0 || unlockkey == 13) // special 1
+            {
+                Movementlock(.65, 9);
+                ZachMovement(1, 9, false, getDirection());
+                hurtOtherPlayer(10, 100, 1, getDirection(), false, .25, 20);
+            }
+            if (getKeyPressed(controls[9]) > 0 || unlockkey == 14) // special 2
+            {
+                Movementlock(.65, 9);
+                ZachMovement(1, 9, false, getDirection());
+                hurtOtherPlayer(10, 100, 1, getDirection(), false, .25, 20);
+            }
+            if (getKeyPressed(controls[11]) > 0 || unlockkey == 15) // special 3
+            {
+                Movementlock(.65, 9);
+                ZachMovement(1, 9, false, getDirection());
+                hurtOtherPlayer(10, 100, 1, getDirection(), false, .25, 20);
+            }
+            if (getKeyPressed(controls[12]) > 0 || unlockkey == 16) // special 4
+            {
+                Movementlock(.65, 9);
+                ZachMovement(1, 9, false, getDirection());
+                hurtOtherPlayer(10, 100, 1, getDirection(), false, .25, 20);
+            }
+            if (getKeyPressed(controls[13]) > 0 || unlockkey == 17) // special 5
+            {
+                Movementlock(.65, 9);
+                ZachMovement(1, 9, false, getDirection());
+                hurtOtherPlayer(10, 100, 1, getDirection(), false, .25, 20);
+            }
+            if (getKeyPressed(controls[14]) > 0 || unlockkey == 18) // block
+            {
+                Movementlock(.65, 9);
+                ZachMovement(1, 9, false, getDirection());
+                hurtOtherPlayer(10, 100, 1, getDirection(), false, .25, 20);
+            }
+            if (getKeyPressed(controls[15]) > 0 || unlockkey == 15) // dodge
+            {
+                Movementlock(.65, 9);
+                ZachMovement(1, 9, false, getDirection());
+                hurtOtherPlayer(10, 100, 1, getDirection(), false, .25, 20);
             }
 
             if (!keyPress && !islocked || unlockkey == 0) //idle
@@ -258,13 +356,16 @@ namespace Assets.Scripts
         }
 
         
-        void hurtOtherPlayer(int damage, int stuntype, float speed, int direction, bool isupward, float stuntime, float range )
+        void hurtOtherPlayer(float damage, int stuntype, float speed, int direction, bool isupward, double stuntime, float range )
         {
-            otherScript.getHurt(damage, stuntype, speed, direction, isupward, stuntime, range);
+            if (getDistance() < range ) {
+                otherScript.setHealth(damage);
+                stunPlayer(stuntype, speed, isupward, stuntime, direction);
+            }
         }
 
 
-        public void getHurt(int damage, int stuntype, float speed, int direction, bool isupward, float stuntime, float range)
+        public void getHurt(float damage, int stuntype, float speed, int direction, bool isupward, double stuntime, float range)
         {
             if (getDistance() < range)
             {
@@ -284,7 +385,7 @@ namespace Assets.Scripts
         float getDistance()
         {
             float distance;
-            float otherPosition = getPosition(otherPlayer);
+            float otherPosition = otherScript.position;
             distance = Mathf.Abs(position - otherPosition);
             return distance;
         }
@@ -293,6 +394,16 @@ namespace Assets.Scripts
         float getPosition(GameObject positionObject)
         {
             return positionObject.transform.position.x;
+        }
+
+        float getHealth(GameObject healthObject)
+        {
+            return healthObject.GetComponent<Movement>().HEALTH;
+        }
+
+        void setHealth(float damage)
+        {
+            HEALTH = HEALTH - damage;
         }
 
 
