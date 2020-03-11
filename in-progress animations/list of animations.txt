@@ -1,0 +1,30 @@
+walk - forward, backward
+
+dash - forward, backward
+
+jump - forward, backward, up, falling
+
+idle
+
+dodge
+
+block
+
+crouch - forward, backward, idle
+
+Light - punch, kick
+
+Heavy - punch, kick
+
+combos - 3 unique
+
+special - 5 unique
+
+arial attacks - 1 kick
+
+meter attacks - 1 unique
+
+hurt - up, down, stunned, fall over
+
+win pose
+ 

@@ -280,43 +280,37 @@ namespace Assets.Scripts
                 ZachMovement(1, 9, false, getDirection());
                 hurtOtherPlayer(10, 100, 1, getDirection(), false, .25, 20);
             }
-            if (getKeyPressed(controls[8]) > 0 || unlockkey == 13) // special 1
+            if (getKeyPressed(controls[8]) > 0 && getKeyPressed(controls[4]) > 0 || unlockkey == 13) // special 1
             {
                 Movementlock(.65, 9);
                 ZachMovement(1, 9, false, getDirection());
                 hurtOtherPlayer(10, 100, 1, getDirection(), false, .25, 20);
             }
-            if (getKeyPressed(controls[9]) > 0 || unlockkey == 14) // special 2
+            if (getKeyPressed(controls[8]) > 0 && getKeyPressed(controls[5]) > 0 || unlockkey == 14) // special 2
             {
                 Movementlock(.65, 9);
                 ZachMovement(1, 9, false, getDirection());
                 hurtOtherPlayer(10, 100, 1, getDirection(), false, .25, 20);
             }
-            if (getKeyPressed(controls[11]) > 0 || unlockkey == 15) // special 3
+            if (getKeyPressed(controls[8]) > 0 && getKeyPressed(controls[6]) > 0 || unlockkey == 15) // special 3
             {
                 Movementlock(.65, 9);
                 ZachMovement(1, 9, false, getDirection());
                 hurtOtherPlayer(10, 100, 1, getDirection(), false, .25, 20);
             }
-            if (getKeyPressed(controls[12]) > 0 || unlockkey == 16) // special 4
+            if (getKeyPressed(controls[8]) > 0 && getKeyPressed(controls[7]) > 0) // special 4
             {
                 Movementlock(.65, 9);
                 ZachMovement(1, 9, false, getDirection());
                 hurtOtherPlayer(10, 100, 1, getDirection(), false, .25, 20);
             }
-            if (getKeyPressed(controls[13]) > 0 || unlockkey == 17) // special 5
+            if (getKeyPressed(controls[9]) > 0 || unlockkey == 18) // block
             {
                 Movementlock(.65, 9);
                 ZachMovement(1, 9, false, getDirection());
                 hurtOtherPlayer(10, 100, 1, getDirection(), false, .25, 20);
             }
-            if (getKeyPressed(controls[14]) > 0 || unlockkey == 18) // block
-            {
-                Movementlock(.65, 9);
-                ZachMovement(1, 9, false, getDirection());
-                hurtOtherPlayer(10, 100, 1, getDirection(), false, .25, 20);
-            }
-            if (getKeyPressed(controls[15]) > 0 || unlockkey == 15) // dodge
+            if (getKeyPressed(controls[10]) > 0 || unlockkey == 15) // dodge
             {
                 Movementlock(.65, 9);
                 ZachMovement(1, 9, false, getDirection());
