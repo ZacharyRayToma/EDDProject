@@ -264,8 +264,8 @@ namespace Assets.Scripts
             }
             if (getKeyPressed(controls[5]) > 0 || unlockkey == 10) // light Punch
             {
-                Movementlock(.65, 9);
-                ZachMovement(1, 9, false, getDirection());
+                Movementlock(.65, 10);
+                ZachMovement(1, 10, false, getDirection());
                 hurtOtherPlayer(10, 100, 1, getDirection(), false, .25, 20);
             }
             if (getKeyPressed(controls[6]) > 0 || unlockkey == 11) // heavy Kick
