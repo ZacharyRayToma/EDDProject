@@ -282,8 +282,8 @@ namespace Assets.Scripts
             }
             if (getKeyPressed(controls[8]) > 0 && getKeyPressed(controls[4]) > 0 || unlockkey == 13) // special 1
             {
-                Movementlock(.65, 9);
-                ZachMovement(1, 9, false, getDirection());
+                Movementlock(.65, 13);
+                ZachMovement(1, 13, false, getDirection());
                 hurtOtherPlayer(10, 100, 1, getDirection(), false, .25, 20);
             }
             if (getKeyPressed(controls[8]) > 0 && getKeyPressed(controls[5]) > 0 || unlockkey == 14) // special 2
