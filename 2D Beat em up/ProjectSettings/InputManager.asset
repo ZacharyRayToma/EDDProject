@@ -165,7 +165,6 @@ InputManager:
     type: 0
     axis: 0
     joyNum: 0
-
   - serializedVersion: 3
     m_Name: LightPunchP1
     descriptiveName: 
@@ -182,7 +181,6 @@ InputManager:
     type: 0
     axis: 0
     joyNum: 0
-
   - serializedVersion: 3
     m_Name: HeavyKickP1
     descriptiveName: 
@@ -199,7 +197,6 @@ InputManager:
     type: 0
     axis: 0
     joyNum: 0
-
   - serializedVersion: 3
     m_Name: LightKickP1
     descriptiveName: 
@@ -216,7 +213,6 @@ InputManager:
     type: 0
     axis: 0
     joyNum: 0
-
   - serializedVersion: 3
     m_Name: SpecialButtonP1
     descriptiveName: 
@@ -233,7 +229,6 @@ InputManager:
     type: 0
     axis: 0
     joyNum: 0
-
   - serializedVersion: 3
     m_Name: BlockP1
     descriptiveName: 
@@ -250,7 +245,6 @@ InputManager:
     type: 0
     axis: 0
     joyNum: 0
-
   - serializedVersion: 3
     m_Name: DodgeP1
     descriptiveName: 
@@ -267,8 +261,6 @@ InputManager:
     type: 0
     axis: 0
     joyNum: 0
-
-
   - serializedVersion: 3
     m_Name: LightPunchP2
     descriptiveName: 
@@ -285,7 +277,6 @@ InputManager:
     type: 0
     axis: 0
     joyNum: 0
-
   - serializedVersion: 3
     m_Name: HeavyKickP2
     descriptiveName: 
@@ -302,7 +293,6 @@ InputManager:
     type: 0
     axis: 0
     joyNum: 0
-
   - serializedVersion: 3
     m_Name: LightKickP2
     descriptiveName: 
@@ -319,7 +309,6 @@ InputManager:
     type: 0
     axis: 0
     joyNum: 0
-
   - serializedVersion: 3
     m_Name: SpecialButtonP2
     descriptiveName: 
@@ -336,7 +325,6 @@ InputManager:
     type: 0
     axis: 0
     joyNum: 0
-
   - serializedVersion: 3
     m_Name: BlockP2
     descriptiveName: 
@@ -353,7 +341,6 @@ InputManager:
     type: 0
     axis: 0
     joyNum: 0
-
   - serializedVersion: 3
     m_Name: DodgeP2
     descriptiveName: 
@@ -370,4 +357,35 @@ InputManager:
     type: 0
     axis: 0
     joyNum: 0
-
+  - serializedVersion: 3
+    m_Name: Submit
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: mouse 0
+    altNegativeButton: 
+    altPositiveButton: joystick button 1
+    gravity: 1000
+    dead: 0.001
+    sensitivity: 1000
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: Cancel
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: escape
+    altNegativeButton: 
+    altPositiveButton: joystick button 1
+    gravity: 1000
+    dead: 0.001
+    sensitivity: 1000
+    snap: 0
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 0

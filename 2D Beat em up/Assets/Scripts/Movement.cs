@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 namespace Assets.Scripts
@@ -38,13 +39,22 @@ namespace Assets.Scripts
         private int stuntypeplaceholder;
         private bool stunupwardplaceholder;
         private int stundirectionplaceholder;
+        public TextMesh tmP1;
+        public TextMesh tmP2;
+        public string player1losescreen;
+        public string player2losescreen;
+
 
 
         // Use this for initialization
         void Start()
         {
+            player1losescreen = "WinScreen2";
+            player1losescreen = "WinScreen1";
+            tmP1 = (TextMesh)GameObject.Find("HealthP1").GetComponent<TextMesh>();
+            tmP2 = (TextMesh)GameObject.Find("HealthP2").GetComponent<TextMesh>();
             stunned = false; //whether or not the player is stunned, if the player is stunned they shouldnt be able to take damage
-            HEALTH = 100; //Health of the player, the player should lose if this number reaches zero. In all caps in honor of Keith's favorite band
+            HEALTH = 10000; //Health of the player, the player should lose if this number reaches zero. In all caps in honor of Keith's favorite band
             isfalling = false; // whether or not the player is involentarily falling, they should not be able to move if this is true
             otherPlayer = GameObject.FindGameObjectWithTag(findOtherPlayer()); // The referece to the other player's object
             otherScript = otherPlayer.GetComponent<Movement>(); // The other player's movement script, used to change its public variables
@@ -53,7 +63,7 @@ namespace Assets.Scripts
             Application.targetFrameRate = 60; // What the framerate should be, in order to keep the game from running too fast since certain mechanics are frame-based.
             islocked = false; //If this is true, the player will not be able to do a move unless the action matches their unlock key
             keyPress = false; //this should become true if a key (which is bound to an action) is being pressed
-            
+
 
 
 
@@ -104,6 +114,7 @@ namespace Assets.Scripts
         // Update is called once per frame
         void Update()
         {
+            
             position = gameObject.transform.position.x; // X position of this object
             mvnt = GetComponent<Movement2D>();
             elevation = transform.position.y; // gets current y value of player
@@ -111,6 +122,9 @@ namespace Assets.Scripts
             distance = getDistance();
             if (player == 1) PlayerMovement(player1controls, getDirectionalAnimationlist());
             if (player == 2) PlayerMovement(player2controls, getDirectionalAnimationlist());
+            HealthDisplayUpdater();
+            EndGameCheck();
+        
 
         }
 
@@ -270,14 +284,14 @@ namespace Assets.Scripts
             }
             if (getKeyPressed(controls[6]) > 0 || unlockkey == 11) // heavy Kick
             {
-                Movementlock(.65, 9);
-                ZachMovement(1, 9, false, getDirection());
+                Movementlock(.65, 11);
+                ZachMovement(1, 11, false, getDirection());
                 hurtOtherPlayer(10, 100, 1, getDirection(), false, .25, 20);
             }
             if (getKeyPressed(controls[7]) > 0 || unlockkey == 12) // light kick
             {
-                Movementlock(.65, 9);
-                ZachMovement(1, 9, false, getDirection());
+                Movementlock(.65, 12);
+                ZachMovement(1, 12, false, getDirection());
                 hurtOtherPlayer(10, 100, 1, getDirection(), false, .25, 20);
             }
             if (getKeyPressed(controls[8]) > 0 && getKeyPressed(controls[4]) > 0 || unlockkey == 13) // special 1
@@ -390,14 +404,26 @@ namespace Assets.Scripts
             return positionObject.transform.position.x;
         }
 
-        float getHealth(GameObject healthObject)
+        public float getHealth()
         {
-            return healthObject.GetComponent<Movement>().HEALTH;
+            return HEALTH;
         }
 
         void setHealth(float damage)
         {
             HEALTH = HEALTH - damage;
+        }
+
+        void HealthDisplayUpdater()
+        {
+            if (player == 1) tmP1.text = "Health:" + string.Format("{0:N0}",HEALTH);
+            else tmP2.text = "Health:" + string.Format("{0:N0}", HEALTH); ;
+        }
+
+        void EndGameCheck()
+        {
+            if (player == 1 && HEALTH <= 0) SceneManager.LoadScene("WinScreen2");
+            else if (player == 2 && HEALTH <= 0) SceneManager.LoadScene("WinScreen1");
         }
 
 
